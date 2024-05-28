@@ -1,0 +1,13 @@
+Routes for product :-
+for get data from backend
+1) Get   /product
+2) Get   /product/:id 
+
+for add product in database
+3) Post  /product/add
+
+for update product in existing database 
+4) Put  /product/update
+
+for delete product from database
+5) Delete  /product/delete
