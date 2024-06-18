@@ -45,8 +45,12 @@ const SummaryApi = {
         url : `${backendDomain}/product/category-product`,
         method : "post"
     },
+    productDetailsBySlug: {
+        url: (slug) => `${backendDomain}/product/product/${slug}`,
+        method: "get"
+    },
     productDetails : {
-        url : `${backendDomain}/product/product-details`,
+        url : (slug) => `${backendDomain}/product/product-details/${slug}`,
         method : "post"
     },
     addToCartProduct : {
@@ -75,6 +79,10 @@ const SummaryApi = {
     },
     filterProduct : {
         url : `${backendDomain}/product/filter-product`,
+        method : "post"
+    },
+    payment : {
+        url : `${backendDomain}/pay/checkout`,
         method : "post"
     }
 }

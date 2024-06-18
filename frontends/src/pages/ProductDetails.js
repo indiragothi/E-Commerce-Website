@@ -18,7 +18,7 @@ const ProductDetails = () => {
     price : "",
     sellingPrice : ""
   })
-  const params = useParams()
+  const { slug } = useParams()
   const [loading, setLoading] = useState(true)
   const productImageListLoading = new Array(4).fill(null)
   const [activeImage, setActiveImage] = useState("")
@@ -32,18 +32,16 @@ const ProductDetails = () => {
 
   const { fetchUserAddToCart } = useContext(Context)
 
-  console.log("product id", params)
-
   const fetchProductDetails = async () =>{
     setLoading(true)
-    const response = await fetch(SummaryApi.productDetails.url, {
-      method : SummaryApi.productDetails.method,
+    const response = await fetch(SummaryApi.productDetailsBySlug.url(slug), {
+      method : SummaryApi.productDetailsBySlug.method,
       headers : {
         "content-type" : "application/json"
       },
-      body : JSON.stringify({
-        productId : params?.id
-      })
+      // body : JSON.stringify({
+      //   productId : slug
+      // })
     })
     setLoading(false)
     const dataResponse = await response.json()
@@ -56,8 +54,10 @@ const ProductDetails = () => {
   console.log("data", data)
 
   useEffect(()=>{
-    fetchProductDetails()
-  }, [params])
+    if(slug){
+      fetchProductDetails()
+    }
+  }, [slug])
 
   const handleMouseEnterProduct = (imageURL) =>{
     setActiveImage(imageURL)

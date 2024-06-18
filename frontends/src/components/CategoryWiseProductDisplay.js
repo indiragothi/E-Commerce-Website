@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct'
 import displayINRCurrency from '../helpers/displayCurrency'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import addToCart from '../helpers/addToCart'
 import Context from '../context'
 import scrollTop from '../helpers/scrollTop'
@@ -10,6 +10,7 @@ const CategoryWiseProductDisplay = ({ category, heading}) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const loadingList = new Array(13).fill(null)
+    const { slug } = useParams()
 
     const { fetchUserAddToCart } = useContext(Context)
 
@@ -64,9 +65,9 @@ const CategoryWiseProductDisplay = ({ category, heading}) => {
             data.map((product, index)=>{
 
                 return (
-                  <Link to={"/product/"+product?._id} className='w-100 bg-white rounded-3 shadow text-decoration-none verticalCard' onClick={scrollTop}>
+                  <Link to={`/product/${product?.slug}`} className='w-100 bg-white rounded-3 shadow text-decoration-none verticalCard' onClick={scrollTop}>
                     <div className='p-4 d-flex justify-content-center align-items-center verticalCardImg'>
-                        <img src={product.productImage[0]} className='object-fit-scale h-100 verticalImg'/>
+                        <img src={product.productImage[0]} alt='' className='object-fit-scale h-100 verticalImg'/>
                     </div>
                     <div className='p-4 d-grid gap-3'>
                         <h6 className='fw-semibold fs-5 text-black mb-0 ellipsis-single-line'>{product?.productName}</h6>

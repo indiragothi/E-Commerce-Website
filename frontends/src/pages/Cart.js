@@ -3,6 +3,7 @@ import SummaryApi from '../common'
 import Context from '../context'
 import displayINRCurrency from '../helpers/displayCurrency'
 import { MdDelete } from "react-icons/md";
+import {loadStripe} from '@stripe/stripe-js';
 
 const Cart = () => {
     const [data, setData] = useState([])
@@ -99,6 +100,30 @@ const Cart = () => {
         }
     }
 
+    const handlePayment = async() =>{
+
+        const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+
+        const response = await fetch(SummaryApi.payment.url, {
+            method : SummaryApi.payment.method,
+            credentials : 'include',
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify({
+                cartItems : data
+            })
+        })
+
+        const responseData = await response.json()
+
+        if(responseData?.id){
+            stripePromise.redirectToCheckout({ sessionId : responseData.id })
+        }
+
+        console.log("payment response", responseData)
+    }
+
     const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0)
     const totalPrice = data.reduce((preve, curr)=> preve + (curr.quantity * curr?.productId?.sellingPrice), 0)
 
@@ -161,31 +186,34 @@ const Cart = () => {
             </div>
 
             {/* summary */}
-            <div className='w-100 mt-5 mt-lg-0 totalProd'>
-                {
-                    loading ? (
-                        <div className='border animate-pulse summaryLoading'>
-                        </div>
-                    ) : (
-                        <div className='bg-white d-grid summaryCls'>
-
-                            <h4 className='text-white bg-danger mb-2 px-4 py-1'>Summary</h4>
-                            <div className='d-flex align-items-center justify-content-between mb-1 px-4 gap-2 font-medium text-lg QtyCls'>
-                                <p className='mb-0'>Quantity</p>
-                                <p className='mb-0'>{totalQty}</p>
+            {
+                data[0] && (
+                    <div className='w-100 mt-5 mt-lg-0 totalProd'>
+                    {
+                        loading ? (
+                            <div className='border animate-pulse summaryLoading'>
                             </div>
+                        ) : (
+                            <div className='bg-white d-grid summaryCls'>
 
-                            <div className='d-flex align-items-center justify-content-between mb-2 px-4 gap-2 font-medium text-lg QtyCls'>
-                                <p className='mb-0'>Total Price</p>
-                                <p className='mb-0'>{displayINRCurrency(totalPrice)}</p>
+                                <h4 className='text-white bg-danger mb-2 px-4 py-1'>Summary</h4>
+                                <div className='d-flex align-items-center justify-content-between mb-1 px-4 gap-2 font-medium text-lg QtyCls'>
+                                    <p className='mb-0'>Quantity</p>
+                                    <p className='mb-0'>{totalQty}</p>
+                                </div>
+
+                                <div className='d-flex align-items-center justify-content-between mb-2 px-4 gap-2 font-medium text-lg QtyCls'>
+                                    <p className='mb-0'>Total Price</p>
+                                    <p className='mb-0'>{displayINRCurrency(totalPrice)}</p>
+                                </div>
+
+                                <button type="button" className="btn btn-secondary" onClick={handlePayment}>Payment</button>
                             </div>
-
-                            <button type="button" class="btn btn-secondary">Payment</button>
-                        </div>
-                    )
-                }
-
-            </div>
+                        )
+                    }
+                    </div>
+                )
+            }
 
         </div>
        
