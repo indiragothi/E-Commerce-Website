@@ -6,7 +6,7 @@ const handleAddToCart = asyncHandler(async(req, res) => {
         const { productId } = req?.body;
         const currentUser = req.user;
 
-        const isProductAvailable = await AddToCart.findOne({ productId })
+        const isProductAvailable = await AddToCart.findOne({ productId , userId : currentUser })
 
         console.log("isProductAvailable ", isProductAvailable)
 

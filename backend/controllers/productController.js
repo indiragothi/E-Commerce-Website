@@ -16,7 +16,7 @@ const handleUploadProduct = asyncHandler(async(req, res) =>{
 
         res.status(201).json({
             data : saveProduct,
-            message : "Product upload successfully",
+            message : "Product uploaded successfully",
             success : true,
             error : false
         })
@@ -30,7 +30,39 @@ const handleUploadProduct = asyncHandler(async(req, res) =>{
     }
 })
 
+const handleGetProductBySlug = asyncHandler(async (req, res) => {
+    try {
+        const { slug } = req.params;
+        const product = await Product.findOne({ slug });
+
+        if (!product) {
+            res.status(404).json({
+                message: "Product not found",
+                error: true,
+                success: false,
+            });
+            return;
+        }
+
+        res.status(200).json({
+            data: product,
+            message: "Product fetched successfully",
+            success: true,
+            error: false,
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message || error,
+            error: true,
+            success: false,
+        });
+    }
+});
+
+
 // get product
+
 const handleGetProduct = asyncHandler(async(req, res) =>{
     try {
         const allProduct = await Product.find().sort({ createdAt : -1 })
@@ -134,9 +166,11 @@ const handleGetCategoryWiseProduct = asyncHandler(async(req, res) =>{
 
 const handleGetProductDetails = asyncHandler(async(req, res) =>{
     try {
-        const { productId } = req.body
+        // const { productId } = req.body
+        const { slug } = req.params;
 
-        const product = await Product.findById(productId)
+        // const product = await Product.findById(productId)
+        const product = await Product.findOne({ slug });
  
         res.json({
             data : product,
@@ -215,6 +249,7 @@ const handleFilterProduct = asyncHandler(async(req, res) =>{
 
 module.exports = {
     handleUploadProduct,
+    handleGetProductBySlug,
     handleGetProduct,
     handleUpdateProduct,
     handleGetCategoryProduct,

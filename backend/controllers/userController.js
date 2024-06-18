@@ -9,12 +9,10 @@ const handleSignUp = asyncHandler(async (req, res) => {
     const { name, email, password, confirmPassword, profilePic } = req.body;
 
     if (!name || !email || !password || !confirmPassword || !profilePic) {
-      // res.status(400);
       throw new Error("Please add all fields");
     }
 
     if( password !== confirmPassword ){
-      // res.status(400);
       throw new Error("Password don't match");
     }
    
@@ -22,7 +20,6 @@ const handleSignUp = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      // res.status(400);
       throw new Error("User already exists");
     }
 
@@ -39,7 +36,7 @@ const handleSignUp = asyncHandler(async (req, res) => {
       name,
       email,
       password : hashedPassword,
-      role : "ADMIN",
+      role : "USER",
       profilePic,
     });
 
@@ -49,22 +46,15 @@ const handleSignUp = asyncHandler(async (req, res) => {
       const saveUser = await newUser.save();
 
       res.json({
-        // _id: newUser.id,
-        // name: newUser.name,
-        // email: newUser.email,
-        // role: newUser.role,
         data : saveUser,
         success : true,
         error : false,
         message : "User created Successfully!"
       });
     }else {
-      // res.status(400);
       throw new Error("User don't create");
     } 
-  } catch (err) {
-    // console.error('Error in Signup user :', err);
-    // res.status(500).json({ message: 'Internal server error' });  
+  } catch (err) { 
     res.json({
       message : err.message || err  ,
       error : true,
@@ -82,7 +72,6 @@ const handleSignIn = asyncHandler(async(req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password || "")
 
     if(!user || !isPasswordCorrect){
-      // res.status(400);
       throw new Error("Invalid email or password");
     }
 
@@ -90,22 +79,15 @@ const handleSignIn = asyncHandler(async(req, res) => {
       generateTokenAndSetCookie(user._id, res)
 
       res.json({
-        // _id: user.id,
-        // name: user.name,
-        // email: user.email,
-        // role: user.role,
         message : "Login successfully",
         data : user,
         success : true,
         error : false
       });
    } else {
-      // res.status(400);
       throw new Error("Invalid user data");
     } 
   } catch (err) {
-    // console.error('Error in SignIn user :', err);
-    // res.status(500).json({ message: 'Internal server error' })
     res.json({
       message : err.message || err  ,
       error : true,
