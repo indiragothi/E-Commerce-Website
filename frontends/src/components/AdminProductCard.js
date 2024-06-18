@@ -12,7 +12,7 @@ const AdminProductCard = ({
   return (
     <div className='bg-white p-3 rounded'>
         <div className='adminProductCard'>
-            <div className='d-flex justify-content-center align-items-center adminProductCardImg'>
+            <div className='d-flex w-100 justify-content-center align-items-center adminProductCardImg'>
                <img src={data?.productImage[0]} alt='' height={120} width={120} className='mx-auto mb-2 h-100 adminProductCardImgProp'/>
             </div>
             <p className='text-capitalize mb-2 adminProductCardText'>{data.productName}</p>

@@ -82,8 +82,8 @@ const HorizontalCardProduct = ({ category, heading}) => {
                     <img src={product.productImage[0]} className='object-fit-scale h-100 horizontalImg'/>
                 </div>
                 <div className='p-2 d-grid'>
-                    <h6 className='fw-semibold fs-5 text-black mb-0 ellipsis-single-line'>{product?.productName}</h6>
-                    <p className='text-capitalize categoryText mb-0'>{product?.category}</p>
+                    <h6 className='fw-semibold fs-5 text-black ellipsis-single-line'>{product?.productName}</h6>
+                    <p className='text-capitalize categoryText mt-1 mb-0'>{product?.category}</p>
                     <div className='d-flex gap-3 mb-0'>
                       <p className='text-danger fw-semibold mb-0'>{ displayINRCurrency(product?.sellingPrice) }</p>
                       <p className='categoryText mb-0'><del>{ displayINRCurrency(product?.price) }</del></p>

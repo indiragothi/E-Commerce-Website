@@ -54,7 +54,7 @@ const Header = () => {
 
   return (
     <div className='container-fluid p-0 '>
-    <header className='shadow-lg bg-white position-fixed w-100 z-1 header-page'>
+    <header className='shadow-lg bg-white position-fixed w-100 z-3 header-page'>
       <div className='h-100 container mx-auto d-flex justify-content-between align-items-center '>
         <div className=''>
           <Link to={"/"}>

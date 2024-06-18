@@ -15,8 +15,8 @@ const AdminPanel = () => {
     }, [user])
 
   return (
-    <div className='d-flex pt-2 admin-page'>
-       <aside className='bg-white w-100 customShadow'>
+    <div className='d-md-flex pt-2 admin-page'>
+       <aside className='bg-white customShadow'>
             <div className='d-flex bg-danger justify-content-center align-items-center flex-column'>
                 <div className='fs-1 d-flex justify-content-center' style={{cursor : "pointer"}}>
                    {

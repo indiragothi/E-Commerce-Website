@@ -62,7 +62,7 @@ const BannerProduct = () => {
     <div className='container mx-auto px-4'>
         <div className='w-100 position-relative bannerProduct'>
 
-            <div className='position-absolute z-3 h-100 w-100 d-flex align-items-center nextPrevBtn'>
+            <div className='position-absolute z-1 h-100 w-100 d-flex align-items-center nextPrevBtn'>
                 <div className='w-100 d-flex justify-content-between fs-5'>
                     <button onClick={preveImage} className='bg-white rounded-circle shadow-md border border-0'><FaAngleLeft /></button> 
                     <button onClick={nextImage} className='bg-white rounded-circle shadow-md border border-0'><FaAngleRight /></button>
