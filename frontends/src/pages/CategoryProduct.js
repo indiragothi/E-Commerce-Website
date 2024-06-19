@@ -97,7 +97,7 @@ const CategoryProduct = () => {
     <div className='container mx-auto p-4'>
 
       {/* desktop version */}
-      <div className='d-none d-lg-grid custom-grid'>
+      <div className='d-lg-grid custom-grid'>
 
         {/* left side */}
         <div className='bg-white p-2 custom-left-hide overflow-y-scroll'>
